@@ -65,6 +65,7 @@
 @REM error level is 0 *or higher*, i.e. it would always jump. Not what we want.
 @REM So we *must* make it an "error" when everything is upgraded already.
 
+@ECHO "Searching for system upgrade needle"
 @git-cmd.exe --command=usr\bin\bash.exe -lc ^" ^
 	needle=\^"$(tail -c 16384 /var/log/pacman.log ^| ^
 		   grep '\[PACMAN\] starting .* system upgrade' ^| ^
@@ -79,7 +80,7 @@
 @IF ERRORLEVEL 1 GOTO DIE
 
 :FINISH
-@REM Wrapping up: re-install git-extra
+@ECHO "Wrapping up: re-install git-extra"
 @pacman -S --noconfirm git-extra
 @IF ERRORLEVEL 1 GOTO DIE
 
